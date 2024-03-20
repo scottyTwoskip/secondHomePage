@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- bringing in font awesome and style sheet -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Scotts HomePage</title>
+  </head>
+  <body>
+    <div class="app">
+      <!-- Picture with time -->
+      <div id="time-container"></div>
+      <div id="date-container"></div>
+      <!-- Buttons for toggling to-do list and time tracker -->
+      <div class="buttons">
+        <button id="toggle-todo">To Do List</button>
+        <button id="toggle-time-tracker">Time Tracker</button>
+      </div>
+    </div>
+    <!-- To-do list which will show when button is clicked -->
+    <div id="to-do-list" class="hidden">
+      <button class="to-do-list-window-button">Close</button>
+      <h2>To-Do:</h2>
+      <ul id="to-dos"></ul>
+    </div>
+    <!-- Time tracker -->
+    <div id="time-tracker" class="hidden">
+      <button class="time-tracker-window-button">Close</button>
+      <h2>Time-Tracker:</h2>
+    </div>
+    <!-- js script link -->
+    <script src="script.js"></script>
+  </body>
+</html>

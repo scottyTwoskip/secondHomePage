@@ -1,0 +1,88 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #8e44ad;
+  color: #fff;
+  font-family: "Roboto Mono", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.app {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#time-container {
+  background-color: #fff;
+  color: black;
+  width: auto;
+  padding: 20px;
+  font-size: 5em;
+  margin-bottom: 20px;
+}
+#date-container {
+  background-color: #fff;
+  color: black;
+  width: auto;
+  padding: 20px;
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  max-width: 600px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  background-color: #6c5ce7;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+
+/* Existing styles for body, html, etc., remain unchanged */
+
+.active {
+  display: block; /* Or flex, depending on your layout needs */
+  position: absolute;
+  width: 40%;
+  top: 0;
+  bottom: 0;
+  overflow: auto; /* Allows scrolling if content exceeds the viewport height */
+  z-index: 2; /* Ensures visibility over other elements */
+}
+
+#to-do-list.active {
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+  color: black;
+  padding: 20px;
+}
+
+#time-tracker.active {
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.9); /* Semi-transparent black */
+  color: white;
+  padding: 20px;
+}
+
+.hidden {
+  display: none;
+}
