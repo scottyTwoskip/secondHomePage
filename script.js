@@ -1,3 +1,10 @@
+//NOTES:
+// 1.reset button needs to be corrected for stopwatch
+// 2. total hours needs to be changed to days hours and mins and seconds
+// 3. delete button needs to be added to log list and organize a drop down menu for it
+//maybe add a delete option to the drop down menu that deletes selected logs
+
+
 //variables
 //mainpage buttons
 const toDoBtn = document.getElementById('toggle-todo')
@@ -8,6 +15,8 @@ const timeTrackerMinimize = document.querySelector('.time-tracker-window-button'
 //time-tracker buttons
 const startStopBtn = document.getElementById('startStopBtn');
 const logTimeBtn = document.getElementById('logTimeBtn')
+const resetBtn = document.getElementById('resetBtn');
+const editResetDropdown = document.getElementById('edit-reset-total-hours');
 //divs
 const timeContainer = document.getElementById('time-container')
 const dateContainer = document.getElementById('date-container')
@@ -67,6 +76,7 @@ let stopwatchInterval = null;
 let stopwatchStartTime = 0;
 let stopwatchElapsed = 0;
 let isStopwatchRunning = false;
+let totalTimeInSeconds = 0
 
 //function to update stopwatch display
 function updateStopwatch() {
@@ -110,8 +120,24 @@ startStopBtn.addEventListener('click', () => {
         logTimeBtn.classList.add('hidden')
     }
 })
+//reset btn event listener
+resetBtn.addEventListener('click', () => {
+    if (isStopwatchRunning) {
+        clearInterval(stopwatchInterval)
+        isStopwatchRunning = false
+    }
+})
+//total time
+function updateTotalHours() {
+    const totalHours = Math.floor(totalTimeInSeconds / 3600)
+    const totalMinutes = Math.floor((totalTimeInSeconds % 3600) / 60)
+    const totalSeconds = totalTimeInSeconds % 60
+    //formatted time in string **weird way of doing it
+    const formattedTotalTime = `${String(totalHours).padStart(2, '0')}:${String(totalMinutes).padStart(2, '0')}:${String(totalSeconds).padStart(2, '0')}`;
+    document.getElementById('total-hours').textContent = `Total Time: ${formattedTotalTime}`;
+}
 
-//logTime event listener
+//logTime and total time event listener
 logTimeBtn.addEventListener('click', () => {
     const logItem = document.createElement('li')
     const logTime = formatStopwatch(stopwatchElapsed)
@@ -120,10 +146,18 @@ logTimeBtn.addEventListener('click', () => {
     const logDateTime = `${logTime} on ${logDate}`
     logItem.textContent = logDateTime
     timeLogsList.appendChild(logItem)
+
+    //total time logic
+    const elapsedTimeInSeconds = Math.floor(stopwatchElapsed / 1000);
+    totalTimeInSeconds += elapsedTimeInSeconds;
+    updateTotalHours();
+
     //after logging, resets the stop watch
     resetStopwatch()
     logTimeBtn.classList.add('hidden')
 })
+//initializing total hours
+updateTotalHours()
 
 //reset stopwatch function
 function resetStopwatch() {
@@ -134,6 +168,25 @@ function resetStopwatch() {
     isStopwatchRunning = false
     startStopBtn.textContent = 'Start'
 }
-
-
+//total hours drop down logic
+editResetDropdown.addEventListener('change', () => {
+    const selectedAction = editResetDropdown.value
+    if (selectedAction === 'reset') {
+        const confirmReset = confirm('Are you sure you want to reset the total hours?')
+        if (confirmReset) {
+            totalTimeInSeconds = 0
+            updateTotalHours()
+        }
+    } else if (selectedAction === 'edit') {
+        const newTotalTime = prompt('Enter new total time in HOURS:')
+        const hoursToSeconds = parseFloat(newTotalTime) * 3600
+        if (!isNaN(hoursToSeconds) && hoursToSeconds >= 0) {
+            totalTimeInSeconds = hoursToSeconds
+            updateTotalHours()
+        } else {
+            alert('Invalid total hours input')
+        }
+    }
+    editResetDropdown.value = ''
+})
 

@@ -75,11 +75,40 @@ button {
   background-color: #3498db;
   border-radius: 4px;
 }
+#resetBtn {
+  font-size: 0.8em;
+  padding: 8px 16px;
+  background-color: #e74c3c; /* A distinct color indicating a reset action */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px; /* Optional: Add some space above the reset button */
+}
+
 #logTimeBtn {
   font-size: 0.8em;
   padding: 8px 16px;
   background-color: #3498db;
   border-radius: 4px;
+}
+#total-hours {
+  margin-top: 20px;
+  font-size: 1.5em; /* Adjust for visibility */
+  padding: 10px;
+  background-color: #34495e; /* Dark background for contrast */
+  color: #ecf0f1; /* Light text for readability */
+  border-radius: 5px; /* Rounded corners */
+}
+
+#edit-reset-total-hours {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #95a5a6; /* Neutral, matches buttons */
+  color: #fff;
+  border: none;
+  border-radius: 5px; /* Consistency with button styles */
+  cursor: pointer;
 }
 
 button:disabled {
