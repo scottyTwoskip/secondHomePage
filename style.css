@@ -56,8 +56,36 @@ button {
   border: none;
   border-radius: 5px;
 }
+/* time tracker  */
+#stopwatch {
+  font-size: 3em;
+  font-weight: bold;
+  color: #3498db;
+  margin: 20px 0;
+  padding: 10px; /* Adds padding inside the stopwatch display */
+  background-color: #ecf0f1; /* Optional: Adds a background color */
+  border-radius: 10px;
+  width: fit-content;
+  border: 2px solid #7f8c8d;
+}
+/* Styles for the Start/Stop button */
+#startStopBtn {
+  font-size: 0.8em;
+  padding: 8px 16px;
+  background-color: #3498db;
+  border-radius: 4px;
+}
+#logTimeBtn {
+  font-size: 0.8em;
+  padding: 8px 16px;
+  background-color: #3498db;
+  border-radius: 4px;
+}
 
-/* Existing styles for body, html, etc., remain unchanged */
+button:disabled {
+  background-color: #7f8c8d;
+  cursor: not-allowed;
+}
 
 .active {
   display: block; /* Or flex, depending on your layout needs */
@@ -70,6 +98,10 @@ button {
 }
 
 #to-do-list.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   left: 0;
   background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
   color: black;
