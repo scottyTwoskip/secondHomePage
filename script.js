@@ -1,5 +1,4 @@
 //NOTES:
-// 1.reset button needs to be corrected for stopwatch
 // 2. total hours needs to be changed to days hours and mins and seconds
 // 3. delete button needs to be added to log list and organize a drop down menu for it
 //maybe add a delete option to the drop down menu that deletes selected logs
@@ -136,33 +135,51 @@ resetBtn.addEventListener('click', () => {
 })
 //total time
 function updateTotalHours() {
-    const totalHours = Math.floor(totalTimeInSeconds / 3600)
-    const totalMinutes = Math.floor((totalTimeInSeconds % 3600) / 60)
-    const totalSeconds = totalTimeInSeconds % 60
-    //formatted time in string **weird way of doing it
-    const formattedTotalTime = `${String(totalHours).padStart(2, '0')}:${String(totalMinutes).padStart(2, '0')}:${String(totalSeconds).padStart(2, '0')}`;
+    const totalDays = Math.floor(totalTimeInSeconds / (3600 * 24));
+    const hoursLeft = totalTimeInSeconds % (3600 * 24);
+    const totalHours = Math.floor(hoursLeft / 3600);
+    const totalMinutes = Math.floor((hoursLeft % 3600) / 60);
+    const totalSeconds = hoursLeft % 60;
+    // Formatting total time string to include days, hours, minutes, and seconds
+    const formattedTotalTime = `${String(totalDays).padStart(2, '0')} days, ${String(totalHours).padStart(2, '0')} hours, ${String(totalMinutes).padStart(2, '0')} minutes, ${String(totalSeconds).padStart(2, '0')} seconds`;
     document.getElementById('total-hours').textContent = `Total Time: ${formattedTotalTime}`;
 }
 
 //logTime and total time event listener
 logTimeBtn.addEventListener('click', () => {
-    const logItem = document.createElement('li')
-    const logTime = formatStopwatch(stopwatchElapsed)
-    const now = new Date()
-    const logDate = now.toLocaleDateString('en-US')
-    const logDateTime = `${logTime} on ${logDate}`
-    logItem.textContent = logDateTime
-    timeLogsList.appendChild(logItem)
+    const logItem = document.createElement('li');
+    const logTime = formatStopwatch(stopwatchElapsed);
+    const now = new Date();
+    const logDate = now.toLocaleDateString('en-US');
+    const logDateTime = `${logTime} on ${logDate}`;
+    logItem.textContent = logDateTime;
+    timeLogsList.appendChild(logItem);
 
-    //total time logic
+    // Delete button creation
+    const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('delete-btn')
+    deleteBtn.textContent = 'Delete';
+    deleteBtn.onclick = function () {
+        // Ask for confirmation before deletion
+        const isConfirmed = window.confirm("Are you sure you want to delete this log?");
+        if (isConfirmed) {
+            this.parentElement.remove(); // Removes the parent element (li) if confirmed
+        }
+    };
+
+    logItem.appendChild(deleteBtn); // Adding the delete button to the log item
+    timeLogsList.appendChild(logItem);
+
+    // Total time logic
     const elapsedTimeInSeconds = Math.floor(stopwatchElapsed / 1000);
     totalTimeInSeconds += elapsedTimeInSeconds;
     updateTotalHours();
 
-    //after logging, resets the stop watch
-    resetStopwatch()
-    logTimeBtn.classList.add('hidden')
-})
+    // Resets the stopwatch after logging
+    resetStopwatch();
+    logTimeBtn.classList.add('hidden');
+});
+
 //initializing total hours
 updateTotalHours()
 

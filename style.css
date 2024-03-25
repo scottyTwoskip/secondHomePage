@@ -147,3 +147,14 @@ button:disabled {
 .hidden {
   display: none;
 }
+
+.delete-btn {
+  padding: 4px 8px;
+  font-size: 0.8em;
+  background-color: #e74c3c; /* Red, indicating a potentially destructive action */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 5px; /* Adds a little space above the button */
+}
