@@ -122,9 +122,16 @@ startStopBtn.addEventListener('click', () => {
 })
 //reset btn event listener
 resetBtn.addEventListener('click', () => {
-    if (isStopwatchRunning) {
-        clearInterval(stopwatchInterval)
-        isStopwatchRunning = false
+    const confirmReset = window.confirm("Are you sure?");
+
+    if (confirmReset) {
+        if (isStopwatchRunning) {
+            clearInterval(stopwatchInterval);
+            isStopwatchRunning = false;
+        }
+        resetStopwatch();
+    } else {
+        console.log('Reset cancelled.');
     }
 })
 //total time
