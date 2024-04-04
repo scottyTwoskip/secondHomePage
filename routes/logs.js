@@ -16,7 +16,6 @@ router.post('/', async (req, res) => {
         hours: req.body.hours,
         minutes: req.body.minutes,
         seconds: req.body.seconds,
-        description: req.body.description,
     })
 
     try {

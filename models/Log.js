@@ -6,7 +6,6 @@ const logSchema = new mongoose.Schema({
     hours: Number,
     minutes: Number,
     seconds: Number,
-    description: String,
 });
 
 // Model is a wrapper around the schema providing an interface to the database

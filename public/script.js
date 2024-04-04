@@ -1,216 +1,201 @@
-//NOTES:
-// 2. total hours needs to be changed to days hours and mins and seconds
-// 3. delete button needs to be added to log list and organize a drop down menu for it
-//maybe add a delete option to the drop down menu that deletes selected logs
-
-
-//variables
-//mainpage buttons
-const toDoBtn = document.getElementById('toggle-todo')
-const timeTrackerBtn = document.getElementById('toggle-time-tracker')
-//minimize buttons
-const toDoMinimize = document.querySelector('.to-do-list-window-button')
-const timeTrackerMinimize = document.querySelector('.time-tracker-window-button')
-//time-tracker buttons
+// Variables
+const toDoBtn = document.getElementById('toggle-todo');
+const timeTrackerBtn = document.getElementById('toggle-time-tracker');
+const toDoMinimize = document.querySelector('.to-do-list-window-button');
+const timeTrackerMinimize = document.querySelector('.time-tracker-window-button');
 const startStopBtn = document.getElementById('startStopBtn');
-const logTimeBtn = document.getElementById('logTimeBtn')
+const logTimeBtn = document.getElementById('logTimeBtn');
 const resetBtn = document.getElementById('resetBtn');
 const editResetDropdown = document.getElementById('edit-reset-total-hours');
-//divs
-const timeContainer = document.getElementById('time-container')
-const dateContainer = document.getElementById('date-container')
-//tdl divs
-const toDoList = document.getElementById('to-do-list')
-//time-tracker divs
+const timeContainer = document.getElementById('time-container');
+const dateContainer = document.getElementById('date-container');
+const toDoList = document.getElementById('to-do-list');
 const timeTracker = document.getElementById('time-tracker');
 const stopwatchDisplay = document.getElementById('stopwatch');
-const timeLogsList = document.getElementById('timeLogs')
+const timeLogsList = document.getElementById('timeLogs');
 
-
-
-//time and date
-function updateDateTime() {
-    const now = new Date()
-    //time
-    const hours = String(now.getHours()).padStart(2, '0')
-    const mins = String(now.getMinutes()).padStart(2, '0')
-    const seconds = String(now.getSeconds()).padStart(2, '0')
-    const currentTime = `${hours}:${mins}:${seconds}`
-    //date
-    const month = String(now.getMonth() + 1).padStart(2, '0'); // getMonth() is zero-based; add 1
-    const day = String(now.getDate()).padStart(2, '0');
-    const year = now.getFullYear();
-    const currentDate = `${month}/${day}/${year}`;
-    //add
-    timeContainer.textContent = currentTime
-    dateContainer.textContent = currentDate
-}
-
-//this updates time and date every second
-setInterval(updateDateTime, 1000)
-updateDateTime()
-
-//toggle apps functionallity 
-function toggleActive(element) {
-    element.classList.toggle('active')
-    element.classList.toggle('hidden')
-}
-//toggle tdl visibility
-toDoBtn.addEventListener('click', () => {
-    toggleActive(toDoList)
-})
-toDoMinimize.addEventListener('click', () => {
-    toggleActive(toDoList)
-})
-//toggle time tracker visibility
-timeTrackerBtn.addEventListener('click', () => {
-    toggleActive(timeTracker)
-})
-timeTrackerMinimize.addEventListener('click', () => {
-    toggleActive(timeTracker)
-})
-
-//timeTracker starts here:
 let stopwatchInterval = null;
 let stopwatchStartTime = 0;
 let stopwatchElapsed = 0;
 let isStopwatchRunning = false;
-let totalTimeInSeconds = 0
+let totalTimeInSeconds = 0;
 
-//function to update stopwatch display
-function updateStopwatch() {
-    const now = Date.now()
-    const elapsedTime = now - stopwatchStartTime
-    stopwatchElapsed = elapsedTime
-    stopwatchDisplay.textContent = formatStopwatch(stopwatchElapsed)
-}
-
-//format stopwatch here
-function formatStopwatch(milliseconds) {
-    let totalSeconds = Math.floor(milliseconds / 1000)
-    let minutes = Math.floor(totalSeconds / 60)
-    let seconds = totalSeconds % 60;
-    let millisecondsDisplay = milliseconds % 1000
-
-    minutes = String(minutes).padStart(2, '0')
-    seconds = String(seconds).padStart(2, '0')
-    millisecondsDisplay = String(millisecondsDisplay).padStart(3, '0').substring(0, 2)
-
-    return `${minutes}:${seconds}.${millisecondsDisplay}`
-}
-// event listener for start btn
-startStopBtn.addEventListener('click', () => {
-    if (isStopwatchRunning) {
-        clearInterval(stopwatchInterval)
-        isStopwatchRunning = false
-        startStopBtn.textContent = 'Start'
-        if (stopwatchElapsed > 0) {
-            logTimeBtn.classList.remove('hidden')
-        }
-    } else {
-        if (!stopwatchElapsed) {
-            stopwatchStartTime = Date.now()
-        } else {
-            stopwatchStartTime = Date.now() - stopwatchElapsed
-        }
-        stopwatchInterval = setInterval(updateStopwatch, 10)
-        isStopwatchRunning = true
-        startStopBtn.textContent = 'Stop'
-        logTimeBtn.classList.add('hidden')
-    }
-})
-//reset btn event listener
-resetBtn.addEventListener('click', () => {
-    const confirmReset = window.confirm("Are you sure?");
-
-    if (confirmReset) {
-        if (isStopwatchRunning) {
-            clearInterval(stopwatchInterval);
-            isStopwatchRunning = false;
-        }
-        resetStopwatch();
-    } else {
-        console.log('Reset cancelled.');
-    }
-})
-//total time
-function updateTotalHours() {
-    const totalDays = Math.floor(totalTimeInSeconds / (3600 * 24));
-    const hoursLeft = totalTimeInSeconds % (3600 * 24);
-    const totalHours = Math.floor(hoursLeft / 3600);
-    const totalMinutes = Math.floor((hoursLeft % 3600) / 60);
-    const totalSeconds = hoursLeft % 60;
-    // Formatting total time string to include days, hours, minutes, and seconds
-    const formattedTotalTime = `${String(totalDays).padStart(2, '0')} days, ${String(totalHours).padStart(2, '0')} hours, ${String(totalMinutes).padStart(2, '0')} minutes, ${String(totalSeconds).padStart(2, '0')} seconds`;
-    document.getElementById('total-hours').textContent = `Total Time: ${formattedTotalTime}`;
-}
-
-//logTime and total time event listener
-logTimeBtn.addEventListener('click', () => {
-    const logItem = document.createElement('li');
-    const logTime = formatStopwatch(stopwatchElapsed);
+// Update Date and Time
+function updateDateTime() {
     const now = new Date();
-    const logDate = now.toLocaleDateString('en-US');
-    const logDateTime = `${logTime} on ${logDate}`;
-    logItem.textContent = logDateTime;
-    timeLogsList.appendChild(logItem);
+    timeContainer.textContent = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+    dateContainer.textContent = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()}`;
+}
+setInterval(updateDateTime, 1000);
 
-    // Delete button creation
-    const deleteBtn = document.createElement('button');
-    deleteBtn.classList.add('delete-btn')
-    deleteBtn.textContent = 'Delete';
-    deleteBtn.onclick = function () {
-        // Ask for confirmation before deletion
-        const isConfirmed = window.confirm("Are you sure you want to delete this log?");
-        if (isConfirmed) {
-            this.parentElement.remove(); // Removes the parent element (li) if confirmed
-        }
-    };
+// Toggle Visibility Functions
+function toggleActive(element) {
+    element.classList.toggle('active');
+    element.classList.toggle('hidden');
+}
 
-    logItem.appendChild(deleteBtn); // Adding the delete button to the log item
-    timeLogsList.appendChild(logItem);
-
-    // Total time logic
-    const elapsedTimeInSeconds = Math.floor(stopwatchElapsed / 1000);
-    totalTimeInSeconds += elapsedTimeInSeconds;
-    updateTotalHours();
-
-    // Resets the stopwatch after logging
-    resetStopwatch();
-    logTimeBtn.classList.add('hidden');
+[toDoBtn, toDoMinimize, timeTrackerBtn, timeTrackerMinimize].forEach(btn => {
+    btn.addEventListener('click', () => {
+        const target = btn === toDoBtn || btn === toDoMinimize ? toDoList : timeTracker;
+        toggleActive(target);
+    });
 });
 
-//initializing total hours
-updateTotalHours()
-
-//reset stopwatch function
-function resetStopwatch() {
-    stopwatchElapsed = 0
-    stopwatchDisplay.textContent = '00:00:00'
-    stopwatchStartTime = 0
-    clearInterval(stopwatchInterval)
-    isStopwatchRunning = false
-    startStopBtn.textContent = 'Start'
+// Update Stopwatch Display
+function updateStopwatch() {
+    stopwatchElapsed = Date.now() - stopwatchStartTime;
+    stopwatchDisplay.textContent = formatStopwatch(stopwatchElapsed);
 }
-//total hours drop down logic
-editResetDropdown.addEventListener('change', () => {
-    const selectedAction = editResetDropdown.value
-    if (selectedAction === 'reset') {
-        const confirmReset = confirm('Are you sure you want to reset the total hours?')
-        if (confirmReset) {
-            totalTimeInSeconds = 0
-            updateTotalHours()
-        }
-    } else if (selectedAction === 'edit') {
-        const newTotalTime = prompt('Enter new total time in HOURS:')
-        const hoursToSeconds = parseFloat(newTotalTime) * 3600
-        if (!isNaN(hoursToSeconds) && hoursToSeconds >= 0) {
-            totalTimeInSeconds = hoursToSeconds
-            updateTotalHours()
-        } else {
-            alert('Invalid total hours input')
-        }
+
+// Format Stopwatch
+function formatStopwatch(milliseconds) {
+    let totalSeconds = Math.floor(milliseconds / 1000);
+    let minutes = Math.floor(totalSeconds / 60);
+    let seconds = totalSeconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
+// Start/Stop Button
+startStopBtn.addEventListener('click', () => {
+    if (isStopwatchRunning) {
+        clearInterval(stopwatchInterval);
+        isStopwatchRunning = false;
+        startStopBtn.textContent = 'Start';
+        logTimeBtn.classList.remove('hidden');
+    } else {
+        stopwatchStartTime = Date.now()
+        stopwatchInterval = setInterval(updateStopwatch, 1000);
+        isStopwatchRunning = true;
+        startStopBtn.textContent = 'Stop';
+        logTimeBtn.classList.add('hidden');
     }
-    editResetDropdown.value = ''
-})
+});
+
+// Reset Stopwatch
+function resetStopwatch() {
+    stopwatchElapsed = 0;
+    stopwatchDisplay.textContent = '00:00';
+    stopwatchStartTime = 0;
+    clearInterval(stopwatchInterval);
+    isStopwatchRunning = false;
+    startStopBtn.textContent = 'Start';
+}
+
+// Reset Button Event Listener
+resetBtn.addEventListener('click', () => {
+    if (window.confirm("Are you sure?")) {
+        resetStopwatch();
+    }
+});
+
+// Log Time and Total Time Event Listener
+logTimeBtn.addEventListener('click', async () => {
+    // Assuming a separate function to handle POST request for log
+    postLog({
+        seconds: Math.floor(stopwatchElapsed / 1000),
+        date: new Date().toISOString()
+    });
+    resetStopwatch();
+});
+
+// Function to Post a New Log
+async function postLog(logData) {
+    try {
+        const response = await fetch('http://localhost:3000/api/logs', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(logData),
+        });
+
+        if (!response.ok) throw new Error('Network response was not ok');
+
+        logTimeBtn.classList.add('hidden');
+        // Call fetchLogs() if you have it to refresh the list of logs
+    } catch (error) {
+        console.error('Error adding log:', error);
+    }
+}
+async function fetchLogs() {
+    try {
+        const response = await fetch('http://localhost:3000/api/logs');
+        if (!response.ok) throw new Error('Failed to fetch logs');
+
+        const logs = await response.json();
+        timeLogsList.innerHTML = ''; // Clear existing logs from the list
+        logs.forEach(log => {
+            const logItem = document.createElement('li');
+            logItem.textContent = `${new Date(log.date).toLocaleDateString('en-US')} - ${formatStopwatch(log.seconds * 1000)}`;
+            // Add delete functionality to each log
+            const deleteBtn = createDeleteButton(log._id);
+            logItem.appendChild(deleteBtn);
+            timeLogsList.appendChild(logItem);
+        });
+    } catch (error) {
+        console.error('Error fetching logs:', error);
+    }
+}
+
+// Create Delete Button for Each Log
+function createDeleteButton(logId) {
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = 'Delete';
+    deleteBtn.classList.add('delete-btn');
+    deleteBtn.onclick = () => deleteLog(logId);
+    return deleteBtn;
+}
+
+// Delete Log Function
+async function deleteLog(logId) {
+    if (!window.confirm('Are you sure you want to delete this log?')) return;
+    try {
+        const response = await fetch(`/api/logs/${logId}`, {
+            method: 'DELETE',
+        });
+        if (!response.ok) throw new Error('Failed to delete log');
+        fetchLogs(); // Refresh the logs displayed
+    } catch (error) {
+        console.error('Error deleting log:', error);
+    }
+}
+
+// Function to Fetch and Display Total Time
+async function fetchAndDisplayTotalTime() {
+    try {
+        const response = await fetch('/api/totalTime');
+        if (!response.ok) throw new Error('Failed to fetch total time');
+
+        const { totalTime } = await response.json();
+        totalTimeInSeconds = totalTime; // Update the global totalTimeInSeconds variable
+        updateTotalHours(); // Update the display
+    } catch (error) {
+        console.error('Error fetching total time:', error);
+    }
+}
+
+// Modify logTimeBtn click event listener to update total time
+logTimeBtn.addEventListener('click', async () => {
+    const totalTimeInSeconds = Math.floor(stopwatchElapsed / 1000);
+    try {
+        await fetch('/api/totalTime', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ totalTimeInSeconds, startedAt: stopwatchStartTime }),
+        });
+        fetchAndDisplayTotalTime();
+    } catch (error) {
+        console.error('Error updating total time:', error);
+    }
+    resetStopwatch();
+});
+
+// Initialization
+document.addEventListener('DOMContentLoaded', () => {
+    updateDateTime();
+    fetchAndDisplayTotalTime();
+    fetchLogs();
+});
 
