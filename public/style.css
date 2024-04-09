@@ -7,7 +7,8 @@
 }
 
 body {
-  background-image: url("../src/dogs.jpg");
+  background: url("./src/dogs.jpg");
+  background-size: cover;
   color: #fff;
   font-family: "Roboto Mono", sans-serif;
   display: flex;
