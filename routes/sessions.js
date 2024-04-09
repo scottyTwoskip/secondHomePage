@@ -1,0 +1,67 @@
+const express = require('express');
+const router = express.Router();
+const Sessions = require('../models/Sessions')
+//create a new session with a start time
+router.post('/', async (req, res) => {
+    try {
+        const { startedAt, endedAt } = req.body
+        if (!startedAt) {
+            return res.status(400).json({ message: "startedAt is required" })
+        }
+        const session = await Sessions.create({ startedAt, endedAt })
+        res.status(201).json(session)
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ message: "Internal Server Error" })
+    }
+})
+//update an existing session with an end time
+router.patch('/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const { endedAt } = req.body; // Use endedAt instead of endTime
+
+        // Check if endedAt is provided
+        if (!endedAt) {
+            return res.status(400).json({ message: "endedAt is required" });
+        }
+
+        const session = await Sessions.findByIdAndUpdate(id, { endedAt }, { new: true });
+
+        if (!session) {
+            return res.status(404).send('Session not found');
+        }
+
+        res.json(session);
+    } catch (err) {
+        console.error(err);
+        res.sendStatus(500);
+    }
+});
+
+//respond with updated session
+//retrieve all sessions so we can use the data
+router.get('/', async (req, res) => {
+    try {
+        const sessions = await Sessions.find({})
+        res.json(sessions)
+    } catch (err) {
+        console.error(err)
+        res.sendStatus(500)
+    }
+})
+//delete a given session by id
+router.delete('/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const session = await Sessions.findByIdAndDelete(id);
+        if (!session) {
+            return res.status(404).send('Session not found');
+        }
+        res.status(204).send();
+    } catch (err) {
+        console.error(err);
+        res.sendStatus(500);
+    }
+});
+module.exports = router

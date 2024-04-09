@@ -4,9 +4,8 @@ const timeTrackerBtn = document.getElementById('toggle-time-tracker');
 const toDoMinimize = document.querySelector('.to-do-list-window-button');
 const timeTrackerMinimize = document.querySelector('.time-tracker-window-button');
 const startStopBtn = document.getElementById('startStopBtn');
-const logTimeBtn = document.getElementById('logTimeBtn');
-const resetBtn = document.getElementById('resetBtn');
-const editResetDropdown = document.getElementById('edit-reset-total-hours');
+const logSessionBtn = document.getElementById('logSessionBtn');
+const cancelBtn = document.getElementById('cancelBtn');
 const timeContainer = document.getElementById('time-container');
 const dateContainer = document.getElementById('date-container');
 const toDoList = document.getElementById('to-do-list');
@@ -15,10 +14,8 @@ const stopwatchDisplay = document.getElementById('stopwatch');
 const timeLogsList = document.getElementById('timeLogs');
 
 let stopwatchInterval = null;
-let stopwatchStartTime = 0;
-let stopwatchElapsed = 0;
+let stopwatchStartTime = null; // Initialize as null for clearer intent on reset
 let isStopwatchRunning = false;
-let totalTimeInSeconds = 0;
 
 // Update Date and Time
 function updateDateTime() {
@@ -28,12 +25,6 @@ function updateDateTime() {
 }
 setInterval(updateDateTime, 1000);
 
-// Toggle Visibility Functions
-function toggleActive(element) {
-    element.classList.toggle('active');
-    element.classList.toggle('hidden');
-}
-
 [toDoBtn, toDoMinimize, timeTrackerBtn, timeTrackerMinimize].forEach(btn => {
     btn.addEventListener('click', () => {
         const target = btn === toDoBtn || btn === toDoMinimize ? toDoList : timeTracker;
@@ -41,161 +32,114 @@ function toggleActive(element) {
     });
 });
 
-// Update Stopwatch Display
-function updateStopwatch() {
-    stopwatchElapsed = Date.now() - stopwatchStartTime;
-    stopwatchDisplay.textContent = formatStopwatch(stopwatchElapsed);
+function toggleActive(element) {
+    element.classList.toggle('active');
+    element.classList.toggle('hidden');
 }
 
-// Format Stopwatch
+function updateStopwatch() {
+    const now = Date.now();
+    const elapsed = now - stopwatchStartTime;
+    stopwatchDisplay.textContent = formatStopwatch(elapsed);
+}
+
 function formatStopwatch(milliseconds) {
     let totalSeconds = Math.floor(milliseconds / 1000);
+    let hours = Math.floor(totalSeconds / 3600);
+    totalSeconds %= 3600;
     let minutes = Math.floor(totalSeconds / 60);
     let seconds = totalSeconds % 60;
-    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
-// Start/Stop Button
 startStopBtn.addEventListener('click', () => {
     if (isStopwatchRunning) {
         clearInterval(stopwatchInterval);
         isStopwatchRunning = false;
         startStopBtn.textContent = 'Start';
-        logTimeBtn.classList.remove('hidden');
+        logSessionBtn.classList.remove('hidden');
     } else {
-        stopwatchStartTime = Date.now()
+        stopwatchStartTime = Date.now();
         stopwatchInterval = setInterval(updateStopwatch, 1000);
         isStopwatchRunning = true;
         startStopBtn.textContent = 'Stop';
-        logTimeBtn.classList.add('hidden');
+        logSessionBtn.classList.add('hidden');
     }
 });
 
-// Reset Stopwatch
 function resetStopwatch() {
-    stopwatchElapsed = 0;
-    stopwatchDisplay.textContent = '00:00';
-    stopwatchStartTime = 0;
     clearInterval(stopwatchInterval);
+    stopwatchDisplay.textContent = '00:00:00';
+    stopwatchStartTime = null;
     isStopwatchRunning = false;
     startStopBtn.textContent = 'Start';
 }
 
-// Reset Button Event Listener
-resetBtn.addEventListener('click', () => {
+cancelBtn.addEventListener('click', () => {
     if (window.confirm("Are you sure?")) {
         resetStopwatch();
     }
 });
 
-// Log Time and Total Time Event Listener
-logTimeBtn.addEventListener('click', async () => {
-    // Assuming a separate function to handle POST request for log
-    postLog({
-        seconds: Math.floor(stopwatchElapsed / 1000),
-        date: new Date().toISOString()
-    });
-    resetStopwatch();
+logSessionBtn.addEventListener('click', async () => {
+    const endTime = new Date().getTime();
+    if (stopwatchStartTime && endTime > stopwatchStartTime) {
+        await postSession({
+            startedAt: stopwatchStartTime,
+            endedAt: endTime
+        });
+        resetStopwatch();
+        fetchAndDisplaySessions(); // Refresh session list after logging new session
+    }
 });
 
-// Function to Post a New Log
-async function postLog(logData) {
+async function postSession(sessionData) {
     try {
-        const response = await fetch('http://localhost:3000/api/logs', {
+        const response = await fetch('http://localhost:3000/api/sessions', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(logData),
+            body: JSON.stringify({ startedAt: sessionData.startedAt, endedAt: sessionData.endedAt }),
         });
 
-        if (!response.ok) throw new Error('Network response was not ok');
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
 
-        logTimeBtn.classList.add('hidden');
-        // Call fetchLogs() if you have it to refresh the list of logs
+        logSessionBtn.classList.add('hidden');
     } catch (error) {
-        console.error('Error adding log:', error);
+        console.error('Error posting session:', error);
     }
+    console.log(sessionData)
 }
-async function fetchLogs() {
-    try {
-        const response = await fetch('http://localhost:3000/api/logs');
-        if (!response.ok) throw new Error('Failed to fetch logs');
 
-        const logs = await response.json();
-        timeLogsList.innerHTML = ''; // Clear existing logs from the list
-        logs.forEach(log => {
+async function fetchAndDisplaySessions() {
+    try {
+        const response = await fetch('http://localhost:3000/api/sessions');
+        if (!response.ok) throw new Error(`Failed to fetch sessions: ${response.statusText}`);
+
+        const sessions = await response.json();
+        console.log(sessions)
+        timeLogsList.innerHTML = '';
+        let totalDuration = 0;
+
+        sessions.forEach(session => {
+            const sessionDuration = session.endedAt ? (session.endedAt - session.startedAt) / 1000 : 0;
+            totalDuration += sessionDuration;
+
             const logItem = document.createElement('li');
-            logItem.textContent = `${new Date(log.date).toLocaleDateString('en-US')} - ${formatStopwatch(log.seconds * 1000)}`;
-            // Add delete functionality to each log
-            const deleteBtn = createDeleteButton(log._id);
-            logItem.appendChild(deleteBtn);
+            logItem.textContent = `${new Date(session.startedAt).toLocaleString()} - Duration: ${formatStopwatch(sessionDuration * 1000)}`;
             timeLogsList.appendChild(logItem);
         });
+
+        document.getElementById('total-hours').textContent = `Total Time: ${formatStopwatch(totalDuration * 1000)}`;
     } catch (error) {
-        console.error('Error fetching logs:', error);
+        console.error('Error fetching sessions:', error);
     }
 }
 
-// Create Delete Button for Each Log
-function createDeleteButton(logId) {
-    const deleteBtn = document.createElement('button');
-    deleteBtn.textContent = 'Delete';
-    deleteBtn.classList.add('delete-btn');
-    deleteBtn.onclick = () => deleteLog(logId);
-    return deleteBtn;
-}
-
-// Delete Log Function
-async function deleteLog(logId) {
-    if (!window.confirm('Are you sure you want to delete this log?')) return;
-    try {
-        const response = await fetch(`/api/logs/${logId}`, {
-            method: 'DELETE',
-        });
-        if (!response.ok) throw new Error('Failed to delete log');
-        fetchLogs(); // Refresh the logs displayed
-    } catch (error) {
-        console.error('Error deleting log:', error);
-    }
-}
-
-// Function to Fetch and Display Total Time
-async function fetchAndDisplayTotalTime() {
-    try {
-        const response = await fetch('/api/totalTime');
-        if (!response.ok) throw new Error('Failed to fetch total time');
-
-        const { totalTime } = await response.json();
-        totalTimeInSeconds = totalTime; // Update the global totalTimeInSeconds variable
-        updateTotalHours(); // Update the display
-    } catch (error) {
-        console.error('Error fetching total time:', error);
-    }
-}
-
-// Modify logTimeBtn click event listener to update total time
-logTimeBtn.addEventListener('click', async () => {
-    const totalTimeInSeconds = Math.floor(stopwatchElapsed / 1000);
-    try {
-        await fetch('/api/totalTime', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ totalTimeInSeconds, startedAt: stopwatchStartTime }),
-        });
-        fetchAndDisplayTotalTime();
-    } catch (error) {
-        console.error('Error updating total time:', error);
-    }
-    resetStopwatch();
-});
-
-// Initialization
 document.addEventListener('DOMContentLoaded', () => {
     updateDateTime();
-    fetchAndDisplayTotalTime();
-    fetchLogs();
+    fetchAndDisplaySessions();
 });
-

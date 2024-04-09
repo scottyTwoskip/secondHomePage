@@ -4,14 +4,12 @@ const cors = require('cors');
 require('dotenv').config()
 
 const app = express()
-const logsRouter = require('./routes/logs')//importing router here
-const totalTimeRouter = require('./routes/totalTime')
+const sessionsRouter = require('./routes/sessions')
 
 //middleware
 app.use(cors());
 app.use(express.json())//for parsing application/json
-app.use('/api/logs', logsRouter)//using router here
-app.use('/api/totalTime', totalTimeRouter)
+app.use('/api/sessions', sessionsRouter)
 app.use(express.static('public'))
 
 //mongoDB connection

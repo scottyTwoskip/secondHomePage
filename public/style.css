@@ -75,7 +75,7 @@ button {
   background-color: #3498db;
   border-radius: 4px;
 }
-#resetBtn {
+#cancelBtn {
   font-size: 0.8em;
   padding: 8px 16px;
   background-color: #e74c3c; /* A distinct color indicating a reset action */
@@ -86,7 +86,7 @@ button {
   margin-top: 10px; /* Optional: Add some space above the reset button */
 }
 
-#logTimeBtn {
+#logSessionBtn {
   font-size: 0.8em;
   padding: 8px 16px;
   background-color: #3498db;
