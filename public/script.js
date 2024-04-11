@@ -1,15 +1,9 @@
 // Variables
-const toDoBtn = document.getElementById('toggle-todo')
-const timeTrackerBtn = document.getElementById('toggle-time-tracker')
-const toDoMinimize = document.querySelector('.to-do-list-window-button')
-const timeTrackerMinimize = document.querySelector('.time-tracker-window-button')
 const startStopBtn = document.getElementById('startStopBtn')
 const logSessionBtn = document.getElementById('logSessionBtn')
 const cancelBtn = document.getElementById('cancelBtn')
 const timeContainer = document.getElementById('time-container')
 const dateContainer = document.getElementById('date-container')
-const toDoList = document.getElementById('to-do-list')
-const timeTracker = document.getElementById('time-tracker')
 const stopwatchDisplay = document.getElementById('stopwatch')
 const sessionLogsList = document.getElementById('sessionLogs')
 
@@ -25,18 +19,6 @@ function updateDateTime() {
     dateContainer.textContent = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()}`
 }
 setInterval(updateDateTime, 1000);
-
-[toDoBtn, toDoMinimize, timeTrackerBtn, timeTrackerMinimize].forEach(btn => {
-    btn.addEventListener('click', () => {
-        const target = btn === toDoBtn || btn === toDoMinimize ? toDoList : timeTracker
-        toggleActive(target)
-    });
-});
-
-function toggleActive(element) {
-    element.classList.toggle('active')
-    element.classList.toggle('hidden')
-}
 
 function updateStopwatch() {
     const now = Date.now();

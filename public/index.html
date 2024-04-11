@@ -12,6 +12,8 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="style.css" />
+    <script src="script.js" type="module"></script>
+    <script src="toggleBtns.js" defer></script>
     <title>Scotts HomePage</title>
   </head>
   <body>
@@ -21,19 +23,26 @@
       <div id="date-container"></div>
       <!-- Buttons for toggling to-do list and time tracker -->
       <div class="buttons">
-        <button id="toggle-todo">To Do List</button>
-        <button id="toggle-time-tracker">Time Tracker</button>
+        <button id="toggle-todo" data-toggle="to-do-list">To Do List</button>
+        <button id="toggle-time-tracker" data-toggle="time-tracker">
+          Time Tracker
+        </button>
       </div>
     </div>
     <!-- To-do list which will show when button is clicked -->
     <div id="to-do-list" class="hidden">
-      <button class="to-do-list-window-button">Close</button>
+      <button class="to-do-list-window-button" data-toggle="to-do-list">
+        Close
+      </button>
       <h2>To-Do:</h2>
+      <form action=""></form>
       <ul id="to-dos"></ul>
     </div>
     <!-- Time tracker -->
     <div id="time-tracker" class="hidden">
-      <button class="time-tracker-window-button">Close</button>
+      <button class="time-tracker-window-button" data-toggle="time-tracker">
+        Close
+      </button>
       <h2>Time-Tracker:</h2>
       <div id="stopwatch">00:00:00</div>
       <button id="startStopBtn">Start</button>
@@ -44,6 +53,5 @@
       <ul id="sessionLogs"></ul>
     </div>
     <!-- js script link -->
-    <script src="script.js"></script>
   </body>
 </html>
