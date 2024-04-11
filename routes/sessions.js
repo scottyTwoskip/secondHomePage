@@ -1,5 +1,5 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 const Sessions = require('../models/Sessions')
 //create a new session with a start time
 router.post('/', async (req, res) => {
@@ -19,28 +19,28 @@ router.post('/', async (req, res) => {
 router.patch('/:id', async (req, res) => {
     try {
         const id = req.params.id;
-        const { endedAt } = req.body; // Use endedAt instead of endTime
+        const { endedAt } = req.body
 
-        // Check if endedAt is provided
+
         if (!endedAt) {
-            return res.status(400).json({ message: "endedAt is required" });
+            return res.status(400).json({ message: "endedAt is required" })
         }
 
-        const session = await Sessions.findByIdAndUpdate(id, { endedAt }, { new: true });
+        const session = await Sessions.findByIdAndUpdate(id, { endedAt }, { new: true })
 
         if (!session) {
-            return res.status(404).send('Session not found');
+            return res.status(404).send('Session not found')
         }
 
-        res.json(session);
+        res.json(session)
     } catch (err) {
-        console.error(err);
-        res.sendStatus(500);
+        console.error(err)
+        res.sendStatus(500)
     }
 });
 
-//respond with updated session
-//retrieve all sessions so we can use the data
+
+
 router.get('/', async (req, res) => {
     try {
         const sessions = await Sessions.find({})
@@ -53,15 +53,15 @@ router.get('/', async (req, res) => {
 //delete a given session by id
 router.delete('/:id', async (req, res) => {
     try {
-        const id = req.params.id;
-        const session = await Sessions.findByIdAndDelete(id);
+        const id = req.params.id
+        const session = await Sessions.findByIdAndDelete(id)
         if (!session) {
-            return res.status(404).send('Session not found');
+            return res.status(404).send('Session not found')
         }
-        res.status(204).send();
+        res.status(204).send()
     } catch (err) {
-        console.error(err);
-        res.sendStatus(500);
+        console.error(err)
+        res.sendStatus(500)
     }
 });
 module.exports = router

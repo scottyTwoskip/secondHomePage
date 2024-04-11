@@ -149,6 +149,12 @@ async function fetchAndDisplaySessions() {
             durationSpan.textContent = ` - Duration: ${formatStopwatch(sessionDuration * 1000)}`
             logItem.appendChild(durationSpan)
 
+            const sessionDeleteBtn = document.createElement('button')
+            sessionDeleteBtn.textContent = 'Delete'
+            sessionDeleteBtn.className = 'session-delete-btn'
+            sessionDeleteBtn.onclick = () => deleteSession(session._id)
+            logItem.appendChild(sessionDeleteBtn)
+
             sessionLogsList.appendChild(logItem)
         });
 
@@ -158,6 +164,23 @@ async function fetchAndDisplaySessions() {
     }
 }
 
+async function deleteSession(sessionId) {
+    const confirmSessionDelete = window.confirm('are you sure you want to delete this session?')
+    if (confirmSessionDelete) {
+        try {
+            const response = await fetch(`http://localhost:3000/api/sessions/${sessionId}`, {
+                method: 'DELETE'
+            })
+            if (!response.ok) {
+                throw new Error('failed to delete session')
+            }
+            //deleting from front end here by reseting
+            fetchAndDisplaySessions()
+        } catch (error) {
+            console.error('error deleting session:', error)
+        }
+    }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     updateDateTime()

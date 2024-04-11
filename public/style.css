@@ -59,50 +59,73 @@ button {
   padding: 10px 20px;
   font-size: 1em;
   cursor: pointer;
-  background-color: #6c5ce7;
+  background-color: #3498db;
   color: #fff;
   border: none;
   border-radius: 5px;
+  transition: background-color 0.3s;
 }
-/* time tracker  */
+
+button:hover {
+  background-color: #1f6da1;
+}
 #stopwatch {
   font-size: 3em;
   font-weight: bold;
   color: #3498db;
   margin: 20px 0;
-  padding: 10px; /* Adds padding inside the stopwatch display */
-  background-color: #ecf0f1; /* Optional: Adds a background color */
+  padding: 10px;
+  background-color: #ecf0f1;
   border-radius: 10px;
   width: fit-content;
   border: 2px solid #7f8c8d;
 }
-/* Styles for the Start/Stop button */
+
 #startStopBtn {
   font-size: 0.8em;
   padding: 8px 16px;
   background-color: #3498db;
   border-radius: 4px;
+  transition: background-color 0.3s;
 }
+
+#startStopBtn:hover {
+  background-color: #1f6da1;
+}
+
 #cancelBtn {
   font-size: 0.8em;
   padding: 8px 16px;
-  background-color: #e74c3c; /* A distinct color indicating a reset action */
+  background-color: #e74c3c;
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-top: 10px; /* Optional: Add some space above the reset button */
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+#cancelBtn:hover {
+  background-color: #c0392b;
 }
 
 #logSessionBtn {
-  background-color: #001bb3;
+  background-color: #3498db;
   font-size: 0.8em;
   padding: 8px 16px;
   border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+#logSessionBtn:hover {
+  background-color: #1f6da1;
 }
 
 #sessionLogs li {
   margin-bottom: 10px; /* Adds space between list items */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 #sessionLogs li .date-time {
@@ -124,29 +147,19 @@ button {
   border-radius: 5px; /* Rounded corners */
 }
 
-#edit-reset-total-hours {
-  margin-top: 10px;
-  padding: 5px 10px;
-  background-color: #95a5a6; /* Neutral, matches buttons */
-  color: #fff;
-  border: none;
-  border-radius: 5px; /* Consistency with button styles */
-  cursor: pointer;
-}
-
 button:disabled {
   background-color: #7f8c8d;
   cursor: not-allowed;
 }
 
 .active {
-  display: block; /* Or flex, depending on your layout needs */
+  display: block;
   position: absolute;
   width: 40%;
   top: 0;
   bottom: 0;
-  overflow: auto; /* Allows scrolling if content exceeds the viewport height */
-  z-index: 2; /* Ensures visibility over other elements */
+  overflow: hidden;
+  z-index: 2;
 }
 
 #to-do-list,
@@ -162,14 +175,14 @@ button:disabled {
   align-items: center;
   justify-content: center;
   left: 0;
-  background-color: rgba(255, 255, 255, 0.6); /* Semi-transparent white */
+  background-color: rgba(255, 255, 255, 0.6);
   color: black;
   padding: 20px;
 }
 
 #time-tracker.active {
   right: 0;
-  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+  background-color: rgba(0, 0, 0, 0.6);
   color: white;
   padding: 20px;
 }
@@ -178,13 +191,18 @@ button:disabled {
   display: none;
 }
 
-.delete-btn {
+.session-delete-btn {
   padding: 4px 8px;
   font-size: 0.8em;
-  background-color: #e74c3c; /* Red, indicating a potentially destructive action */
+  background-color: #e74c3c;
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-top: 5px; /* Adds a little space above the button */
+  align-items: end;
+  transition: background-color 0.3s;
+}
+
+.session-delete-btn:hover {
+  background-color: #c0392b;
 }
