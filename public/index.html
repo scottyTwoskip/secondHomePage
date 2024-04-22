@@ -30,13 +30,22 @@
       </div>
     </div>
     <!-- To-do list which will show when button is clicked -->
+    
     <div id="to-do-list" class="hidden">
       <button class="to-do-list-window-button" data-toggle="to-do-list">
         Close
       </button>
       <h2>To-Do:</h2>
-      <form action=""></form>
-      <ul id="to-dos"></ul>
+      <form action="">
+        <textarea id="todo-input" class="todo-input" placeholder="Add new todo..."></textarea>
+        <button class="to-do-submit">Add</button>
+      </form>
+      <ul id="to-dos">
+        <li>dummy 1 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ea, modi!</li>
+        <li>dummy 1</li>
+        <li>dummy 1</li>
+        <li>dummy 1</li>
+      </ul>
     </div>
     <!-- Time tracker -->
     <div id="time-tracker" class="hidden">
