@@ -12,8 +12,7 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="style.css" />
-    <script src="script.js" type="module"></script>
-    <script src="toggleBtns.js" defer></script>
+
     <title>Scotts HomePage</title>
   </head>
   <body>
@@ -36,8 +35,8 @@
         Close
       </button>
       <div id="input-container">
-        <form action="">
-          <input type="date" id="date" required="false" />
+        <form id="tdl-form" action="">
+          <input type="date" id="date" />
           <div class="checkbox-container">
             <input type="checkbox" id="important-checkbox" checked="false" />
             <label for="important-checkbox">Important?</label>
@@ -46,8 +45,9 @@
             id="todo-input"
             class="todo-input"
             placeholder="Add new todo..."
+            required
           ></textarea>
-          <button class="to-do-submit">Add</button>
+          <button class="to-do-submit" type="submit">Add</button>
         </form>
       </div>
       <h2 class="left-aligned">To-Do:</h2>
@@ -80,5 +80,8 @@
       <ul id="sessionLogs"></ul>
     </div>
     <!-- js script link -->
+    <script src="script.js" type="module"></script>
+    <script src="toggleBtns.js" defer></script>
+    <script src="toDoList.js"></script>
   </body>
 </html>

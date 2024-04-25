@@ -186,12 +186,13 @@ button:disabled {
   color: black;
   padding: 20px;
   width: 30%;
+  overflow: auto;
 }
 
 #to-do-list.active h2 {
   align-self: flex-start; /* Align the h2 to the start of its column */
   text-align: left; /* Align the text of h2 to the left */
-  margin-top: 10px; /* Adjust margin as needed */
+  margin-top: 30px; /* Adjust margin as needed */
 }
 
 #to-do-list.active form {
@@ -254,7 +255,6 @@ button:disabled {
   list-style-type: disc;
   padding-left: 15px;
   width: 100%;
-  margin: 0.75rem 0rem;
 }
 
 #to-dos li {

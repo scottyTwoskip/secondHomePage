@@ -6,5 +6,12 @@
 const dateInput = document.getElementById('date')
 const importantInput = document.getElementById('important-checkbox')
 const textArea = document.querySelector('textarea')
+const tdlForm = document.getElementById('tdl-form')
 
+tdlForm.addEventListener('submit', (e) => {
+    e.preventDefault()
 
+    console.log(`${dateInput.value}`)
+    console.log(importantInput.checked)
+    console.log(textArea.value)
+})
