@@ -122,20 +122,20 @@ button:hover {
 }
 
 #sessionLogs li {
-  margin-bottom: 10px; /* Adds space between list items */
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 #sessionLogs li .date-time {
-  color: #3498db; /* Sets the color for the date and time */
-  display: block; /* Ensures the date/time is on its own line */
+  color: #3498db;
+  display: block;
 }
 
 #sessionLogs li .duration {
-  display: block; /* Ensures the duration is on its own line */
-  color: #95a5a6; /* Sets a different color for the duration */
+  display: block;
+  color: #95a5a6;
 }
 
 #total-hours {
@@ -183,67 +183,104 @@ button:disabled {
   left: 0;
   background-color: rgba(255, 255, 255, 0.6);
   color: black;
-  padding: 20px; 
-  width: 30%; 
+  padding: 20px;
+  width: 30%;
 }
 
 #to-do-list.active h2 {
-  padding-top: 0.9375rem; 
+  padding-top: 0.9375rem;
 }
 
 #to-do-list.active form {
-  width: 100%; 
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 1rem; 
+  padding: 0 1rem;
 }
 
 #to-do-list.active .todo-input {
-  width: 100%;
-  height: auto; /* Initial height and allows growth */
-  min-height: 6rem; /* Minimum height similar to your input */
+  opacity: 70%;
+  width: 110%;
+  height: auto;
+  min-height: 6rem;
   margin-top: 1rem;
-  font-size: 1.25rem;
+  font-size: 1rem;
   padding: 0.5rem;
-  resize: none; /* Prevents manual resizing */
-  overflow: hidden; /* Hides the scrollbar */
+  resize: none;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  border: hidden;
 }
 
+#to-do-list.active .todo-input:focus {
+  opacity: 100%;
+  outline: none;
+  box-shadow: 0 0 0 2px #3498db, 0 3px 6px rgba(0, 0, 0, 0.2);
+}
 
+#to-do-list.active .todo-input:hover {
+  opacity: 100%;
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 0 0 2px #3498db, 0 3px 6px rgba(0, 0, 0, 0.2);
+}
 
 #to-do-list.active .to-do-submit {
-  margin-top: 0.625rem; 
+  margin-top: 0.625rem;
   cursor: pointer;
-  font-size: 0.8rem; 
+  font-size: 0.8rem;
   width: 8rem;
 }
 
 #to-do-list.active .to-do-list-window-button {
   position: absolute;
-  right: 1rem; 
-  top: 1rem; 
+  right: 1rem;
+  top: 1rem;
 }
 
 #to-dos {
-  list-style-type:disc; 
-  padding-left: 15px; 
-  width: 100%; 
+  list-style-type: disc;
+  padding-left: 15px;
+  width: 100%;
   margin: 2.4rem 0;
 }
 
 #to-dos li {
-  background-color: rgba(0, 0, 0, 0.1); 
+  background-color: rgba(0, 0, 0, 0.1);
   font-size: 1.25rem;
-  margin: 0.8rem 0; 
-  padding: 0.5rem; 
-  word-wrap: break-word; 
-  white-space: normal; 
-  overflow-wrap: break-word; 
-  background-color: white
+  margin: 0.8rem 0;
+  padding: 0.5rem;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+  background-color: white;
 }
 
+#date {
+  font-family: "Roboto Mono", sans-serif;
+  font-size: 0.75em;
+  opacity: 30%;
+  padding: 10px 14px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 5px;
+  color: black;
+  width: auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+}
 
+#date:hover {
+  opacity: 100%;
+  background-color: rgba(255, 255, 255, 1);
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+#date:focus {
+  opacity: 100%;
+  outline: none;
+  box-shadow: 0 0 0 2px #3498db, 0 3px 6px rgba(0, 0, 0, 0.2); /* blue glow to indicate focus plus enhanced shadow for depth */
+}
 .active {
   right: 0;
   background-color: rgba(0, 0, 0, 0.6);
