@@ -35,22 +35,32 @@
       <button class="to-do-list-window-button" data-toggle="to-do-list">
         Close
       </button>
+      <div id="input-container">
+        <input type="date" id="date" required="false" />
+        <div class="checkbox-container">
+          <input type="checkbox" id="important-checkbox" checked="false" />
+          <label for="important-checkbox">Important?</label>
+        </div>
+        <form action="">
+          <textarea
+            id="todo-input"
+            class="todo-input"
+            placeholder="Add new todo..."
+          ></textarea>
+          <button class="to-do-submit">Add</button>
+        </form>
+      </div>
       <h2>To-Do:</h2>
-      <input type="date" id="date" required="false" />
-      <form action="">
-        <textarea
-          id="todo-input"
-          class="todo-input"
-          placeholder="Add new todo..."
-        ></textarea>
-        <button class="to-do-submit">Add</button>
-      </form>
       <ul id="to-dos">
         <li>
+          <div class="date-display">10/10/12</div>
           dummy 1 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ea,
           modi!
         </li>
-        <li>dummy 1</li>
+        <li class="important">
+          <div class="date-display">10/10/12</div>
+          Important example !!! 1
+        </li>
         <li>dummy 1</li>
         <li>dummy 1</li>
       </ul>

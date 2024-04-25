@@ -177,9 +177,10 @@ button:disabled {
 }
 
 #to-do-list.active {
-  position: absolute;
   display: flex;
   flex-direction: column;
+  align-items: center; /* Centers the child elements */
+  position: absolute;
   left: 0;
   background-color: rgba(255, 255, 255, 0.6);
   color: black;
@@ -199,6 +200,13 @@ button:disabled {
   padding: 0 1rem;
 }
 
+#input-container {
+  width: 100%; /* Takes full width of the container */
+  margin-top: 45px; /* Adds space between the close button and this container */
+  display: flex;
+  flex-direction: column;
+}
+
 #to-do-list.active .todo-input {
   opacity: 70%;
   width: 110%;
@@ -211,6 +219,7 @@ button:disabled {
   overflow: hidden;
   border-radius: 0.5rem;
   border: hidden;
+  box-shadow: 0 0 0 2px #3498db, 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
 #to-do-list.active .todo-input:focus {
@@ -242,18 +251,43 @@ button:disabled {
   list-style-type: disc;
   padding-left: 15px;
   width: 100%;
-  margin: 2.4rem 0;
+  margin: 0.75rem 0rem;
 }
 
 #to-dos li {
+  font-family: "Roboto Mono", sans-serif;
   background-color: rgba(0, 0, 0, 0.1);
-  font-size: 1.25rem;
+  font-size: 1rem;
+  font-weight: 650;
   margin: 0.8rem 0;
   padding: 0.5rem;
   word-wrap: break-word;
   white-space: normal;
   overflow-wrap: break-word;
   background-color: white;
+}
+#to-dos li .date-display {
+  background-color: #6e9ece;
+  color: #fff;
+  padding: 0.25rem;
+  margin: 5px;
+  border-radius: 0.5rem;
+  border: hidden;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+#to-dos .important .date-display {
+  background-color: #d76060;
+  color: #fff;
+  padding: 0.25rem;
+  margin: 5px;
+  border-radius: 0.5rem;
+  border: hidden;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+li::marker {
+  color: #3498db;
 }
 
 #date {
@@ -281,6 +315,19 @@ button:disabled {
   outline: none;
   box-shadow: 0 0 0 2px #3498db, 0 3px 6px rgba(0, 0, 0, 0.2); /* blue glow to indicate focus plus enhanced shadow for depth */
 }
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+#input-container label {
+  color: red;
+  margin-left: 5px;
+  font-size: 0.9em; /* Adjust the font size as needed */
+}
+
 .active {
   right: 0;
   background-color: rgba(0, 0, 0, 0.6);
