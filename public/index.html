@@ -36,12 +36,12 @@
         Close
       </button>
       <div id="input-container">
-        <input type="date" id="date" required="false" />
-        <div class="checkbox-container">
-          <input type="checkbox" id="important-checkbox" checked="false" />
-          <label for="important-checkbox">Important?</label>
-        </div>
         <form action="">
+          <input type="date" id="date" required="false" />
+          <div class="checkbox-container">
+            <input type="checkbox" id="important-checkbox" checked="false" />
+            <label for="important-checkbox">Important?</label>
+          </div>
           <textarea
             id="todo-input"
             class="todo-input"
@@ -50,7 +50,7 @@
           <button class="to-do-submit">Add</button>
         </form>
       </div>
-      <h2>To-Do:</h2>
+      <h2 class="left-aligned">To-Do:</h2>
       <ul id="to-dos">
         <li>
           <div class="date-display">10/10/12</div>
