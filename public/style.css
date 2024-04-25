@@ -279,7 +279,7 @@ button:disabled {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
-#to-dos .important .date-display {
+#to-dos .important.date-display {
   background-color: #d76060;
   color: #fff;
   padding: 0.25rem;
