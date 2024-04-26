@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 const ToDossSchema = new mongoose.Schema({
-    date: { type: Number, required: false },
+    date: { type: Date, required: false },
     toDo: { type: String, required: true }
 });
 

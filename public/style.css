@@ -361,15 +361,53 @@ li::marker {
   background-color: #c0392b;
 }
 
-.tdlDelete {
+.tdlDelete,
+.tdlEdit {
   opacity: 50%;
-  font-size: 14px;
-  padding: 6px 8px;
-  margin-left: 15px;
+  font-size: 12px; /* Reduced font size */
+  padding: 4px 4px; /* Reduced padding */
+  margin-top: 10px; /* Maintain margin-top to space buttons from text */
+  cursor: pointer;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 50%; /* Optional: Make buttons circular */
+  width: 24px; /* Fixed width for uniform size */
+  height: 24px; /* Fixed height for uniform size */
+  display: flex;
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+  transition: background-color 0.3s, opacity 0.3s;
 }
-.tdlDelete:hover {
+
+.tdlDelete:hover,
+.tdlEdit:hover {
   opacity: 100%;
-  font-size: 14px;
-  padding: 6px 8px;
-  margin-left: 15px;
+  background-color: #1f6da1;
+}
+
+.tdlDelete {
+  background-color: #e74c3c; /* Red color for delete button */
+}
+
+.tdlDelete:hover {
+  background-color: #c0392b;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.editInput {
+  border: none; /* Remove border */
+  outline: none; /* Remove focus outline */
+  background-color: transparent; /* Make background transparent */
+  width: 100%; /* Full width to take up the space of its container */
+  padding: 0; /* Remove padding */
+  font-size: 16px; /* Match the font size of your list items or spans */
+  color: inherit; /* Use the text color of the parent element */
+  box-sizing: border-box; /* Makes sure padding and border are included in width/height */
 }
