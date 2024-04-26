@@ -1,6 +1,11 @@
 //target where the to do is going to be entered and where it will be displayed
 // track the date, important?, text area text. 
 //display these on page when pressing add
+//add delete function to list items
+
+//IMPORTANT!!!!!!
+//review code before starting
+//still need an EDIT BTN!
 
 //variables
 const dateInput = document.getElementById('date')
@@ -9,6 +14,7 @@ const textArea = document.querySelector('textarea')
 const tdlForm = document.getElementById('tdl-form')
 const TDL = document.getElementById('to-dos')
 
+// function deleteToDo = 
 tdlForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -33,7 +39,18 @@ tdlForm.addEventListener('submit', (e) => {
     }
 
     // Add the text area content
-    li.appendChild(document.createTextNode(textArea.value));
+    const textAreaTD = document.createTextNode(textArea.value)
+    li.appendChild(textAreaTD);
+
+    const deleteBtn = document.createElement('button')
+    deleteBtn.classList.add('tdlDelete')
+    deleteBtn.textContent = 'Delete'
+    deleteBtn.onclick = function () {
+        if (confirm("Are you sure?")) {
+            li.remove(); // Remove the parent list item on click
+        }
+    };
+    li.appendChild(deleteBtn)
 
     // Append the new li to the TDL list
     TDL.appendChild(li);
