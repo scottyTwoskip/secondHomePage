@@ -213,10 +213,12 @@ button:disabled {
 
 #to-do-list.active .todo-input {
   opacity: 70%;
-  width: 110%;
+  width: calc(100% - 30px); /* Subtracting 30px total from the width */
   height: auto;
   min-height: 6rem;
   margin-top: 1rem;
+  margin-left: 15px; /* Margin on the left */
+  margin-right: 15px; /* Margin on the right */
   font-size: 1rem;
   padding: 0.5rem;
   resize: none;
