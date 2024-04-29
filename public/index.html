@@ -1,75 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- bringing in font awesome and style sheet -->
     <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+            integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="style.css" />
 
     <title>Scotts HomePage</title>
-  </head>
-  <body>
-    <div class="app">
-      <!-- Picture with time -->
-      <div id="time-container"></div>
-      <div id="date-container"></div>
-      <!-- Buttons for toggling to-do list and time tracker -->
-      <div class="buttons">
+</head>
+<body>
+<div class="app">
+    <!-- Picture with time -->
+    <div id="time-container"></div>
+    <div id="date-container"></div>
+    <!-- Buttons for toggling to-do list and time tracker -->
+    <div class="buttons">
         <button id="toggle-todo" data-toggle="to-do-list">To Do List</button>
         <button id="toggle-time-tracker" data-toggle="time-tracker">
-          Time Tracker
+            Time Tracker
         </button>
-      </div>
     </div>
-    <!-- To-do list which will show when button is clicked -->
+</div>
+<!-- To-do list which will show when button is clicked -->
 
-    <div id="to-do-list" class="hidden">
-      <button class="to-do-list-window-button" data-toggle="to-do-list">
+<div id="to-do-list" class="hidden">
+    <button class="to-do-list-window-button" data-toggle="to-do-list">
         Close
-      </button>
-      <div id="input-container">
+    </button>
+    <div id="input-container">
         <form id="tdl-form" action="">
-          <input type="date" id="date" />
-          <div class="checkbox-container">
-            <input type="checkbox" id="important-checkbox" checked="false" />
-            <label for="important-checkbox">Important?</label>
-          </div>
-          <textarea
-            id="todo-input"
-            class="todo-input"
-            placeholder="Add new todo..."
-            required
-          ></textarea>
-          <button class="to-do-submit" type="submit">Add</button>
+            <input type="date" id="date" />
+            <div class="checkbox-container">
+                <input type="checkbox" id="important-checkbox" checked="false" />
+                <label for="important-checkbox">Important?</label>
+            </div>
+            <textarea
+                    id="todo-input"
+                    class="todo-input"
+                    placeholder="Add new todo..."
+                    required
+            ></textarea>
+            <button class="to-do-submit" type="submit">Add</button>
         </form>
-      </div>
-      <h2 class="left-aligned">To-Do:</h2>
-      <ul id="to-dos">
     </div>
-    <!-- Time tracker -->
-    <div id="time-tracker" class="hidden">
-      <button class="time-tracker-window-button" data-toggle="time-tracker">
+    <h2 class="left-aligned">To-Do:</h2>
+    <ul id="to-dos">
+</div>
+<!-- Time tracker -->
+<div id="time-tracker" class="hidden">
+    <button class="time-tracker-window-button" data-toggle="time-tracker">
         Close
-      </button>
-      <h2>Time-Tracker:</h2>
-      <div id="stopwatch">00:00:00</div>
-      <button id="startStopBtn">Start</button>
-      <button id="cancelBtn">Cancel</button>
-      <button id="logSessionBtn" class="hidden">Log Session</button>
-      <div id="total-hours">Total Time: 00:00:00</div>
-
-      <ul id="sessionLogs"></ul>
-    </div>
-    <!-- js script link -->
-    <script src="script.js" type="module"></script>
-    <script src="toggleBtns.js" defer></script>
-    <script src="toDoList.js"></script>
-  </body>
+    </button>
+    <h2>Time-Tracker:</h2>
+    <div id="stopwatch">00:00:00</div>
+    <button id="startStopBtn">Start</button>
+    <button id="cancelBtn">Cancel</button>
+    <button id="logSessionBtn" class="hidden">Log Session</button>
+    <div id="total-hours">Total Time: 00:00:00</div>
+    <button id="addSessionBtn">Add Session</button>
+    <input id="addSessionInput" type="text" placeholder="Minutes" class="hidden" > <!-- Ensure the input field is properly defined -->
+    <ul id="sessionLogs"></ul>
+</div>
+<!-- js script link -->
+<script src="toggleBtns.js" defer></script>
+<script src="toDoList.js"></script>
+<script src="script.js" type="module"></script> <!-- Move the script tag here -->
+</body>
 </html>

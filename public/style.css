@@ -411,3 +411,34 @@ li::marker {
   color: inherit; /* Use the text color of the parent element */
   box-sizing: border-box; /* Makes sure padding and border are included in width/height */
 }
+
+#addSessionBtn {
+  font-size: 0.8em; /* Reduce font size */
+  padding: 6px 12px; /* Reduce padding */
+  background-color: rgba(
+    52,
+    152,
+    219,
+    0.7
+  ); /* Slightly transparent blue color */
+  border-radius: 4px; /* Rounded corners */
+  transition: background-color 0.3s; /* Smooth transition on hover */
+  margin: 20px 10px; /* More margin on top and bottom, slightly more on sides */
+}
+
+#addSessionBtn:hover {
+  background-color: rgba(31, 109, 161, 0.7); /* Darker blue on hover */
+}
+
+#addSessionInput {
+  font-size: 1em; /* Increase font size */
+  padding: 8px; /* Increase padding */
+  border-radius: 4px; /* Rounded corners */
+  border: 2px solid #3498db; /* Border color */
+  width: 100px; /* Set width to fit time input */
+  text-align: center; /* Center text */
+}
+
+#addSessionInput::placeholder {
+  opacity: 1; /* Reduced placeholder opacity */
+}

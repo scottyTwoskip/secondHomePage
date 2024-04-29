@@ -25,7 +25,8 @@ tdlForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const toDoData = {
-        date: dateInput.value,
+        // Convert date input to ISO format with timezone offset before sending
+        date: new Date(`${dateInput.value}T00:00:00`).toISOString(),
         toDo: textArea.value,
         important: importantInput.checked
     };
@@ -96,15 +97,17 @@ function createEditButton(todo) {
         const textSpan = document.getElementById(`todo-${todo._id}`).querySelector('span');
         textSpan.parentNode.replaceChild(textarea, textSpan);
         textarea.focus();
-        editBtn.textContent = '💾';
-        editBtn.onclick = async () => {
+        // Disable the onclick event to prevent multiple bindings
+        editBtn.onclick = null;
+        // Instead of directly setting the onclick event, use addEventListener to avoid overriding previous bindings
+        editBtn.addEventListener('click', async () => {
             const updatedText = textarea.value;
             updateToDo(todo._id, { toDo: updatedText });
             const newSpan = document.createElement('span');
             newSpan.textContent = updatedText;
             textarea.parentNode.replaceChild(newSpan, textarea);
             editBtn.textContent = '✏️';
-        };
+        });
     };
 
     return editBtn;
