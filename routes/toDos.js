@@ -1,67 +1,69 @@
-const express = require('express')
-const router = express.Router()
-const ToDos = require('../models/ToDos')
-//create a new session with a start time
+const express = require('express');
+const router = express.Router();
+const ToDos = require('../models/ToDos');
+
+// Create a new To-Do
 router.post('/', async (req, res) => {
     try {
-        const { date, toDoData } = req.body
-        if (!startedAt) {
-            return res.status(400).json({ message: "ToDo is required" })
+        const { date, toDo, important } = req.body;
+        if (!toDo) {
+            return res.status(400).json({ message: "ToDo is required" });
         }
-        const toDo = await ToDos.create({ date, toDoData })
-        res.status(201).json(session)
+        const newToDo = await ToDos.create({ date, toDo, important });
+        res.status(201).json(newToDo);
     } catch (err) {
-        console.error(err)
-        res.status(500).json({ message: "Internal Server Error" })
+        console.error(err);
+        res.status(500).json({ message: "Internal Server Error" });
     }
-})
-//update an existing session with an end time
+});
+
+// Update an existing To-Do
 router.patch('/:id', async (req, res) => {
     try {
         const id = req.params.id;
-        const { endedAt } = req.body
+        const { toDo, important } = req.body;
 
-
-        if (!endedAt) {
-            return res.status(400).json({ message: "endedAt is required" })
+        if (!toDo) {
+            return res.status(400).json({ message: "ToDo data is required" });
         }
 
-        const session = await Sessions.findByIdAndUpdate(id, { endedAt }, { new: true })
+        const updatedToDo = await ToDos.findByIdAndUpdate(id, { toDo, important }, { new: true });
 
-        if (!session) {
-            return res.status(404).send('Session not found')
+        if (!updatedToDo) {
+            return res.status(404).send('ToDo not found');
         }
 
-        res.json(session)
+        res.json(updatedToDo);
     } catch (err) {
-        console.error(err)
-        res.sendStatus(500)
+        console.error(err);
+        res.sendStatus(500);
     }
 });
 
-
-
+// Get all To-Dos
 router.get('/', async (req, res) => {
     try {
-        const sessions = await Sessions.find({})
-        res.json(sessions)
+        const todos = await ToDos.find({});
+        res.json(todos);
     } catch (err) {
-        console.error(err)
-        res.sendStatus(500)
-    }
-})
-//delete a given session by id
-router.delete('/:id', async (req, res) => {
-    try {
-        const id = req.params.id
-        const session = await Sessions.findByIdAndDelete(id)
-        if (!session) {
-            return res.status(404).send('Session not found')
-        }
-        res.status(204).send()
-    } catch (err) {
-        console.error(err)
-        res.sendStatus(500)
+        console.error(err);
+        res.sendStatus(500);
     }
 });
-module.exports = router
+
+// Delete a given To-Do by id
+router.delete('/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const deletedToDo = await ToDos.findByIdAndDelete(id);
+        if (!deletedToDo) {
+            return res.status(404).send('ToDo not found');
+        }
+        res.status(204).send();
+    } catch (err) {
+        console.error(err);
+        res.sendStatus(500);
+    }
+});
+
+module.exports = router;

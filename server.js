@@ -5,11 +5,13 @@ require('dotenv').config()
 
 const app = express()
 const sessionsRouter = require('./routes/sessions')
+const toDosRouter = require('./routes/toDos')
 
 //middleware
 app.use(cors());
 app.use(express.json())//for parsing application/json
 app.use('/api/sessions', sessionsRouter)
+app.use('/api/toDos', toDosRouter)
 app.use(express.static('public'))
 
 //mongoDB connection

@@ -1,11 +1,9 @@
-
 const mongoose = require('mongoose');
 
-const ToDossSchema = new mongoose.Schema({
+const ToDosSchema = new mongoose.Schema({
     date: { type: Date, required: false },
-    toDo: { type: String, required: true }
+    toDo: { type: String, required: true },
+    important: { type: Boolean, default: false }
 });
 
-
-
-module.exports = mongoose.model('ToDos', ToDossSchema);
+module.exports = mongoose.model('ToDos', ToDosSchema);
